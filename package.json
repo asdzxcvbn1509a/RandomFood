@@ -1,0 +1,27 @@
+{
+  "name": "randomfood",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "npm run dev -w client",
+    "dev:server": "npm run dev -w server",
+    "dev:all": "concurrently \"npm run dev -w client\" \"npm run dev -w server\"",
+    "build": "npm run build -w client",
+    "build:all": "npm run build -w client && npm run build -w server",
+    "lint": "npm run lint -w client && npm run lint -w server",
+    "preview": "npm run preview -w client",
+    "test": "npm run test -w client && npm run test -w server"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ]
+}
