@@ -6,6 +6,8 @@ import { filterRestaurantsByCuisine } from "./lib/filter.js";
 import { getCurrentPosition } from "./lib/geolocation.js";
 import { pickRandomOne } from "./lib/randomize.js";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8787";
+
 function App() {
   const [location, setLocation] = useState(null);
   const [radius, setRadius] = useState(1000);
@@ -46,7 +48,7 @@ function App() {
         radius: String(radius),
         type: placeType,
       });
-      const response = await fetch(`/api/restaurants/nearby?${query.toString()}`);
+      const response = await fetch(`${API_URL}/api/restaurants/nearby?${query.toString()}`);
       const data = await response.json();
       if (!response.ok) {
         throw new Error(data.error ?? "Failed to fetch restaurants");
