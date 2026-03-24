@@ -150,7 +150,7 @@ export async function fetchNearbyRestaurants(params) {
       },
       mapsUrl: place.googleMapsUri ?? `https://www.google.com/maps/search/?api=1&query=${place.location.latitude},${place.location.longitude}`,
       imageUrl: place.photos?.[0]?.name
-        ? `/api/restaurants/photo?photoName=${encodeURIComponent(place.photos[0].name)}`
+        ? `${process.env.API_URL || ''}/api/restaurants/photo?photoName=${encodeURIComponent(place.photos[0].name)}`
         : null,
     }));
 }
