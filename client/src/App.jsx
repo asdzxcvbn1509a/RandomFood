@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Controls } from "./components/Controls.jsx";
 import { LocationButton } from "./components/LocationButton.jsx";
 import { RestaurantCard } from "./components/RestaurantCard.jsx";
@@ -9,6 +9,7 @@ import { pickRandomOne } from "./lib/randomize.js";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8787";
 
 function App() {
+  const restaurantCardRef = useRef(null);
   const [location, setLocation] = useState(null);
   const [radius, setRadius] = useState(1000);
   const [placeType, setPlaceType] = useState("");
@@ -61,6 +62,12 @@ function App() {
       setLoadingFetch(false);
     }
   };
+
+  useEffect(() => {
+    if (selectedRestaurant && isRandomizing) {
+      restaurantCardRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [selectedRestaurant, isRandomizing]);
 
   const onRandomize = () => {
     if (!filteredRestaurants.length || isRandomizing) return;
@@ -185,7 +192,9 @@ function App() {
           </div>
         ) : null}
 
-        <RestaurantCard restaurant={selectedRestaurant} />
+        <div ref={restaurantCardRef}>
+          <RestaurantCard restaurant={selectedRestaurant} />
+        </div>
       </section>
     </main>
   );
